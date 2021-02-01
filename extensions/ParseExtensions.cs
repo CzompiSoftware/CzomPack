@@ -1,5 +1,7 @@
-﻿using System;
+﻿using hu.czompisoftware.libraries.io;
+using System;
 using System.IO;
+using System.Text;
 #if NET5_0 || NETCOREAPP3_1
 using System.Text.Json;
 #else 
@@ -25,8 +27,20 @@ namespace hu.czompisoftware.libraries.extensions
 
         public static T ParseXML<T>(this string @this) where T : class
         {
-            var reader = XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
+            var reader = XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document, IgnoreWhitespace = true });
             return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
+        }
+        
+
+        public static string ToXMLString<T>(this T @this) where T : class
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(@this.GetType());
+            
+            using (Utf8StringWriter textWriter = new Utf8StringWriter())
+            {
+                xmlSerializer.Serialize(textWriter, @this);
+                return textWriter.ToString();
+            }
         }
 
         public static T ParseJSON<T>(this string @this)

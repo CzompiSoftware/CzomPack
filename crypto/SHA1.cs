@@ -7,6 +7,11 @@ namespace hu.czompisoftware.libraries.crypto
 {
     public class SHA1
     {
+        public static string Compute(string text)
+        {
+            return $"{new SHA1(text)}";
+        }
+
         private string Text { get; }
 
         public SHA1(String text)
@@ -17,7 +22,7 @@ namespace hu.czompisoftware.libraries.crypto
         public override String ToString()
         {
             var sha1 = new SHA1Managed();
-            return BitConverter.ToString(sha1.ComputeHash(Encoding.UTF8.GetBytes(Text)));
+            return BitConverter.ToString(sha1.ComputeHash(Encoding.UTF8.GetBytes(Text))).Replace("-", "");
         }
     }
 }

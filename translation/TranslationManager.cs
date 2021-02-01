@@ -19,14 +19,15 @@ using System.Threading;
 namespace hu.czompisoftware.libraries.translation
 {
 
-    public class TranslationManager: LanguageInfo
+    public class TranslationManager : LanguageInfo
     {
 
-#region Properties
+        #region Properties
         internal static Assembly ParentAssembly { get; set; }
 
         private IList<string> LanguageFileNames { get; }
         private Dictionary<string, Translation> LanguageList { get; }
+        private string Extension { get; }
 
         protected LanguageInfo DefaultLangInfo { get; set; } = new LanguageInfo("en");
         protected LanguageInfo LangInfo = null;
@@ -34,52 +35,63 @@ namespace hu.czompisoftware.libraries.translation
         public Translation Current { get; internal set; }
         public Translation Default { get; internal set; }
         public string DefaultFileLoc { get; private set; }
-#endregion
+        #endregion
 
-        public TranslationManager(Assembly parentAssembly, string langCode = "{default}")
+        /// <summary>
+        /// Manage translations from assembly<i> or in the future, you'll be able to get translations from web and file as well</i>.
+        /// </summary>
+        /// <param name="parentAssembly">This is important to set it correctly, because this is used to locate language files. Language file directory is <b>Resources\Lang\lang_CODE.<paramref name="extension"/></b><br/>If you disable preload, the <see cref="Default"/> and <see cref="Current"/> properties can't be used.</param>
+        /// <param name="langCode">Language code (system based language code, for example <b>en_US</b> or <b>en</b>.</param>
+        /// <param name="preloadTranslations">If set to <b>true</b>, this manager will automatically load the language list. It can be disabled by set to <b>false</b>, which is useful if you'd like to handle language on your own.</param>
+        /// <param name="extension">Extension of the language file. This can be used to alter the default extension, which is <b>json</b></param>
+        public TranslationManager(Assembly parentAssembly, string langCode = "{default}", bool preloadTranslations = true, string extension = "json")
         {
-            langCode = langCode == "{default}" || langCode.ToLower() == DefaultLangInfo.Code.ToLower() ? null : langCode;
-            TranslationManager.ParentAssembly = parentAssembly ?? Assembly.GetCallingAssembly();
-            CultureInfo lang = null;
-            //Stream stream = parentAssembly.GetManifestResourceStream(ResourceName);
-            LanguageFileNames = GetResources(@"([Rl]esources\.[Ll]ang\..*\.json)$");
-            LanguageList = LoadTranslationList();
-            //lang = CultureInfo.GetCultureInfo(Globals.Configs.Config.Global.Locale);
-            lang = CultureInfo.CurrentUICulture; var OSLangInfo = new LanguageInfo(lang.Name);
-            LangInfo = new LanguageInfo(langCode ?? lang.Name);
-            Code = LangInfo.Code;
-            Name = LangInfo.Name;
-            EnglishName = LangInfo.EnglishName;
+            extension ??= "json";
+            Extension = extension;
+            ParentAssembly = parentAssembly ?? Assembly.GetCallingAssembly();
+            if (preloadTranslations)
+            {
+                langCode = langCode == "{default}" || langCode.ToLower() == DefaultLangInfo.Code.ToLower() ? null : langCode;
+                CultureInfo lang = null;
+                LanguageFileNames = GetResources(@$"([Rr]esources\.[Ll]ang\..*\.{Extension})$");
+                LanguageList = LoadTranslationList();
+                //lang = CultureInfo.GetCultureInfo(Globals.Configs.Config.Global.Locale);
+                lang = CultureInfo.CurrentUICulture; var OSLangInfo = new LanguageInfo(lang.Name);
+                LangInfo = new LanguageInfo(langCode ?? lang.Name);
+                Code = LangInfo.Code;
+                Name = LangInfo.Name;
+                EnglishName = LangInfo.EnglishName;
 
-            try
-            {
-                Default = FromCode(OSLangInfo);
-            }
-            catch (Exception)
-            {
-                Default = FromCode(DefaultLangInfo);
-            }
-            finally
-            {
-                Logger.Info($"Using {ChatColor.BrightGreen}{Default.Language.EnglishName}{ChatColor.White} as default language (based on system language).");
-                Default.Language.EnglishName = Default.Translations["languages.osdefault"].Original;
-                Default.Language.Name = Default.Translations["languages.osdefault"].Translated;
-                
-            }
+                try
+                {
+                    Default = FromCode(OSLangInfo);
+                }
+                catch (Exception)
+                {
+                    Default = FromCode(DefaultLangInfo);
+                }
+                finally
+                {
+                    Logger.Info($"Using {ChatColor.BrightGreen}{Default.Language.EnglishName}{ChatColor.White} as default language (based on system language).");
+                    Default.Language.EnglishName = Default.Translations["languages.osdefault"].Original;
+                    Default.Language.Name = Default.Translations["languages.osdefault"].Translated;
 
-            Current = FromCode(LangInfo);
-            Logger.Info($"Using {ChatColor.BrightGreen}{Current.Language.EnglishName}{ChatColor.White} as current display language (based on selected language).");
+                }
+
+                Current = FromCode(LangInfo);
+                Logger.Info($"Using {ChatColor.BrightGreen}{Current.Language.EnglishName}{ChatColor.White} as current display language (based on selected language).");
+            }
         }
 
-#region Loading stuff
+        #region Loading stuff
 
-#region GetTranslation
+        #region GetTranslation
         protected Translation LoadTranslation(LanguageInfo lang, string assemblyLangLoc, LanguageInfo def = null, string assemblyDefLangLoc = null, bool isDefault = false)
         {
             ///DONE: Redo GetLanguage
             Translation res = null;
-            var fileLangLoc = Path.Combine(Globals.WorkingDir, "Langs", $"{lang.Code}.json");
-            var fileDefLangLoc = Path.Combine(Globals.WorkingDir, "Langs", $"en.json");
+            var fileLangLoc = Path.Combine(Globals.WorkingDir, "Langs", $"{lang.Code}.{Extension}");
+            var fileDefLangLoc = Path.Combine(Globals.WorkingDir, "Langs", $"en.{Extension}");
             if (!File.Exists(fileLangLoc))
             {
                 res = LoadTranslationFromAssembly(lang, assemblyLangLoc, def, assemblyDefLangLoc, isDefault);
@@ -96,14 +108,14 @@ namespace hu.czompisoftware.libraries.translation
                 }
                 catch
                 {
-                    Logger.Error("Cannot load any languages. If you're the application developer, please refer documentation to see more info about loading languages using our system.",true);
+                    Logger.Error("Cannot load any languages. If you're the application developer, please refer documentation to see more info about loading languages using our system.", true);
                 }
             }
             return res;
         }
-#endregion
+        #endregion
 
-#region LoadTranslationFromFile
+        #region LoadTranslationFromFile
         protected Translation LoadTranslationFromFile(LanguageInfo lang, string langLoc, LanguageInfo def = null, string defLangLoc = null, bool isDefault = false)
         {
             Translation language;
@@ -120,13 +132,14 @@ namespace hu.czompisoftware.libraries.translation
             }
             catch (Exception ex)
             {
-                if (!isDefault) {
+                if (!isDefault)
+                {
                     Logger.Warning($"§7[Language/{lang.Code}]{ChatColor.Reset} Cannot load §e{lang.EnglishName}{ChatColor.Reset} language. Falling back to default...");
                     if (ParentAssembly.IsDebugBuild()) Logger.Error($"§7[Language/{lang.Code}]{ChatColor.Reset} {ChatColor.Red}{ex}!");
                     return LoadTranslationFromAssembly(def, defLangLoc, isDefault: true);
-                } 
+                }
                 else Logger.Error($"§7[Language/{lang.Code}]{ChatColor.Reset} Cannot load §e{lang.EnglishName}{ChatColor.Reset} language.");
-                
+
                 if (ParentAssembly.IsDebugBuild()) Logger.Error($"§7[Language/{lang.Code}]{ChatColor.Reset} {ChatColor.Red}{ex}!");
 #if NET5_0 || NETCOREAPP3_1
                 throw new MissingLanguageException($"{JsonSerializer.Serialize(lang)}", ex);
@@ -136,9 +149,9 @@ namespace hu.czompisoftware.libraries.translation
             }
             return language;
         }
-#endregion
-        
-#region LoadTranslationFromAssembly
+        #endregion
+
+        #region LoadTranslationFromAssembly
         protected Translation LoadTranslationFromAssembly(LanguageInfo lang, string langLoc, LanguageInfo def = null, string defLangLoc = null, bool isDefault = false)
         {
             Translation language;
@@ -159,13 +172,14 @@ namespace hu.czompisoftware.libraries.translation
             }
             catch (Exception ex)
             {
-                if (!isDefault) {
+                if (!isDefault)
+                {
                     Logger.Warning($"§7[Language/{lang.Code}]{ChatColor.Reset} Cannot load §e{lang.EnglishName}{ChatColor.Reset} language. Falling back to default...");
                     if (ParentAssembly.IsDebugBuild()) Logger.Error($"§7[Language/{lang.Code}]{ChatColor.Reset} {ChatColor.Red}{ex}!");
                     return LoadTranslationFromAssembly(def, defLangLoc, isDefault: true);
-                } 
+                }
                 else Logger.Error($"§7[Language/{lang.Code}]{ChatColor.Reset} Cannot load §e{lang.EnglishName}{ChatColor.Reset} language.");
-                
+
                 if (ParentAssembly.IsDebugBuild()) Logger.Error($"§7[Language/{lang.Code}]{ChatColor.Reset} {ChatColor.Red}{ex}!");
 #if NET5_0 || NETCOREAPP3_1
                 throw new MissingLanguageException($"{JsonSerializer.Serialize(lang)}", ex);
@@ -175,17 +189,17 @@ namespace hu.czompisoftware.libraries.translation
             }
             return language;
         }
-#endregion
+        #endregion
 
-#region LoadLanguageList
+        #region LoadLanguageList
         public Dictionary<String, Translation> LoadTranslationList()
         {
             Dictionary<String, Translation> lst = new Dictionary<String, Translation>();
-            var langs = GetResources(@"([Rl]esources\.[Ll]ang\..*\.json)$");
+            var langs = GetResources(@$"([Rl]esources\.[Ll]ang\..*\.{Extension})$");
 #if NET5_0 || NETCOREAPP3_1
-            DefaultFileLoc ??= langs.Where(x => x.Contains($"{DefaultLangInfo.Code}.json", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            DefaultFileLoc ??= langs.Where(x => x.Contains($"{DefaultLangInfo.Code}.{Extension}", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 #else
-            DefaultFileLoc ??= langs.Where(x => x.ToLower().Contains($"{DefaultLangInfo.Code}.json".ToLower())).FirstOrDefault();
+            DefaultFileLoc ??= langs.Where(x => x.ToLower().Contains($"{DefaultLangInfo.Code}.{Extension}".ToLower())).FirstOrDefault();
 #endif
             for (int i = 0; i < langs.Count; i++)
             {
@@ -195,19 +209,19 @@ namespace hu.czompisoftware.libraries.translation
             }
             return lst;
         }
-#endregion
+        #endregion
 
 
-#region FromCode
+        #region FromCode
         public Translation FromCode(LanguageInfo language)
         {
             return LanguageList != null && language.Code.ToLower() != "{default}" && LanguageList.Where(x => x.Key.Contains(language.Code)).ToList().Count > 0 ? LanguageList.Where(x => x.Key.Contains(language.Code)).FirstOrDefault().Value : Default;
         }
-#endregion
+        #endregion
 
-#endregion
+        #endregion
 
-#region GetResources
+        #region GetResources
         /// <summary>
         /// Returns a dictionary of the assembly resources (not embedded).<br/>
         /// Code from <b>Aurelien Ribon</b>
@@ -225,7 +239,7 @@ namespace hu.czompisoftware.libraries.translation
             }
             return ret;
         }
-#endregion
+        #endregion
 
     }
 }

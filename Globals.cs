@@ -19,12 +19,12 @@ namespace hu.czompisoftware.libraries
 
 #if NETCOREAPP3_1 || NET5_0
         #region Newtonsoft.Json -> System.Text.Json
-        public static JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions
+        public static JsonSerializerOptions JsonSerializerOptions => new()
         {
             WriteIndented = true,
             PropertyNameCaseInsensitive = false,
             IgnoreNullValues = true,
-            //jso.ReadCommentHandling = JsonCommentHandling.Allow;
+            AllowTrailingCommas = true,
             ReadCommentHandling = JsonCommentHandling.Skip
         };
         #endregion
