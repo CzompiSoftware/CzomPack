@@ -1,13 +1,9 @@
-﻿using hu.czompisoftware.libraries.general;
+﻿using CzomPack.Logging;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace hu.czompisoftware.libraries.crypto
+namespace CzomPack.Cryptography
 {
     public class RSA
     {

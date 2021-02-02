@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace hu.czompisoftware.libraries.extensions
+namespace CzomPack.Extensions
 {
     public static class TypographyExtensions
     {

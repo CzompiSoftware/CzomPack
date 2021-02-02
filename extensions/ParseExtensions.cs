@@ -1,7 +1,5 @@
-﻿using hu.czompisoftware.libraries.io;
-using System;
+﻿using CzomPack.IO;
 using System.IO;
-using System.Text;
 #if NET5_0 || NETCOREAPP3_1
 using System.Text.Json;
 #else 
@@ -10,7 +8,7 @@ using Newtonsoft.Json;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace hu.czompisoftware.libraries.extensions
+namespace CzomPack.Extensions
 {
     public static class ParseExtensions
     {

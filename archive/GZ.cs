@@ -1,11 +1,8 @@
-﻿using hu.czompisoftware.libraries.general;
-using System;
-using System.Collections.Generic;
+﻿using CzomPack.Logging;
 using System.IO;
 using System.IO.Compression;
-using System.Text;
 
-namespace hu.czompisoftware.libraries.archive
+namespace CzomPack.Archive
 {
     public class GZ
     {

@@ -1,4 +1,4 @@
-﻿namespace hu.czompisoftware.libraries.net
+﻿namespace CzomPack.Network
 {
     public enum RequestMethod
     {

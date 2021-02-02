@@ -1,6 +1,6 @@
-﻿using hu.czompisoftware.libraries.coloring;
-using hu.czompisoftware.libraries.extensions;
-using hu.czompisoftware.libraries.general;
+﻿using CzomPack.Coloring;
+using CzomPack.Extensions;
+using CzomPack.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace hu.czompisoftware.libraries.translation
+namespace CzomPack.Translation
 {
 
     public class TranslationManager : LanguageInfo
@@ -37,6 +37,7 @@ namespace hu.czompisoftware.libraries.translation
         public string DefaultFileLoc { get; private set; }
         #endregion
 
+        #region Constructor
         /// <summary>
         /// Manage translations from assembly<i> or in the future, you'll be able to get translations from web and file as well</i>.
         /// </summary>
@@ -82,6 +83,7 @@ namespace hu.czompisoftware.libraries.translation
                 Logger.Info($"Using {ChatColor.BrightGreen}{Current.Language.EnglishName}{ChatColor.White} as current display language (based on selected language).");
             }
         }
+        #endregion
 
         #region Loading stuff
 

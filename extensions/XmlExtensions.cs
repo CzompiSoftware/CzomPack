@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace hu.czompisoftware.libraries.extensions
+namespace CzomPack.Extensions
 {
     public static class XmlExtensions
     {

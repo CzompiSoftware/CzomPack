@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace hu.czompisoftware.libraries.extensions
+namespace CzomPack.Extensions
 {
     public static class AssemblyExtensions
     {

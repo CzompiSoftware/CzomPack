@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace hu.czompisoftware.libraries.translation
+namespace CzomPack.Translation
 {
     internal class LanguageList
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hu.czompisoftware.libraries.networkproxy
+namespace CzomPack.NetworkProxy
 {
 
     public class ProxyConfig

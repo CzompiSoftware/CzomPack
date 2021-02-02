@@ -1,5 +1,5 @@
-﻿using hu.czompisoftware.libraries.coloring;
-using hu.czompisoftware.libraries.extensions;
+﻿using CzomPack.Coloring;
+using CzomPack.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace hu.czompisoftware.libraries.general
+namespace CzomPack.Logging
 {
     public class Logger
     {
@@ -165,14 +165,5 @@ namespace hu.czompisoftware.libraries.general
             //#endif
         }
         #endregion
-    }
-
-    public enum LogType
-    {
-        Info = 1,
-        Warning = 2,
-        Error = 3,
-        FatalError = 4,
-        Debug = 5
     }
 }

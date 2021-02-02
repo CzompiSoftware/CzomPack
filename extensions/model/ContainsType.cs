@@ -1,4 +1,4 @@
-﻿namespace hu.czompisoftware.libraries.extensions.model
+﻿namespace CzomPack.Extensions.Model
 {
     public enum ContainsType
     {

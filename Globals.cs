@@ -9,7 +9,7 @@ using System.Text.Json;
 #endif
 using System.Threading.Tasks;
 
-namespace hu.czompisoftware.libraries
+namespace CzomPack
 {
     internal class Globals
     {

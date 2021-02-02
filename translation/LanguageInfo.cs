@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace hu.czompisoftware.libraries.translation
+namespace CzomPack.Translation
 {
     public class LanguageInfo
     {

@@ -1,5 +1,4 @@
-﻿using hu.czompisoftware.libraries.general;
-#if NETCOREAPP3_1
+﻿#if NETCOREAPP3_1
 //using hu.czompisoftware.notifications;
 #endif
 using System;
@@ -9,8 +8,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using CzomPack.Logging;
 
-namespace hu.czompisoftware.libraries.networkproxy
+namespace CzomPack.NetworkProxy
 {
     public class ProxyHandler
     {

@@ -1,160 +1,167 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net5.0;net45;netcoreapp3.1;netcoreapp2.2;netcoreapp2.1</TargetFrameworks>
-    <Authors>Czompi</Authors>
-    <Company>Czompi Software</Company>
-    <Product>CzompiPack</Product>
-    <Copyright>Czompi Software 2020</Copyright>
-    <Description>Core libraries for Czompi's programming needs.</Description>
-    <PackageId>CzomPack</PackageId>
-    <RootNamespace>hu.czompisoftware.libraries</RootNamespace>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.3.2.5</Version>
-    <PackageReleaseNotes>
-      1.1
-      - Migrated to new build model.
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;net45;netcoreapp3.1;netcoreapp2.2;netcoreapp2.1</TargetFrameworks>
+		<Authors>Czompi</Authors>
+		<Company>Czompi Software</Company>
+		<Product>CzompiPack</Product>
+		<Copyright>Czompi Software 2020</Copyright>
+		<Description>Core libraries for Czompi's programming needs.</Description>
+		<PackageId>CzomPack</PackageId>
+		<RootNamespace>CzomPack</RootNamespace>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>2.3.2.5</Version>
+		<PackageReleaseNotes>
+			1.1
+			- Migrated to new build model.
 
-      1.2
-      - Trying to fix ExcelManager's license exception.
+			1.2
+			- Trying to fix ExcelManager's license exception.
 
-      1.2.1
-      - Fixed ExcelManager's license exception.
+			1.2.1
+			- Fixed ExcelManager's license exception.
 
-      1.2.2.x
-      - Added new license elements and modernized license management.
+			1.2.2.x
+			- Added new license elements and modernized license management.
 
-      1.3
-      - Added translation management.
+			1.3
+			- Added translation management.
 
-      1.3.1
-      - Fixed translation management classes visibility.
+			1.3.1
+			- Fixed translation management classes visibility.
 
-      1.3.2
-      - Fixed translation location.
+			1.3.2
+			- Fixed translation location.
 
-      1.3.3
-      - Fixed translation list.
+			1.3.3
+			- Fixed translation list.
 
-      1.3.3.2
-      - Fixed translation list at every function.
+			1.3.3.2
+			- Fixed translation list at every function.
 
-      1.3.4
-      - Made possible to automatically update translation.
+			1.3.4
+			- Made possible to automatically update translation.
 
-      1.4
-      - Added SHA1 hashing algorithm.
+			1.4
+			- Added SHA1 hashing algorithm.
 
-      1.5
-      - Added GZ and made .archive namespace.
+			1.5
+			- Added GZ and made .archive namespace.
 
-      1.5.1
-      - Made GZ public.
+			1.5.1
+			- Made GZ public.
 
-      1.6
-      - Translation https fix #1
+			1.6
+			- Translation https fix #1
 
-      1.7
-      - Fixed license manager System.IndexOutOfRangeException exception.
+			1.7
+			- Fixed license manager System.IndexOutOfRangeException exception.
 
-      1.7.1
-      - Fixed License manager fixed entirelly.
+			1.7.1
+			- Fixed License manager fixed entirelly.
 
-      2.0
-      - .NET Framework 4.5 support.
+			2.0
+			- .NET Framework 4.5 support.
 
-      2.1
-      - Renamed every packages from hu.czompi to hu.czompisoftware
+			2.1
+			- Renamed every packages from hu.czompi to hu.czompisoftware
 
-      2.1.1
-      - made DTH public
+			2.1.1
+			- made DTH public
 
-      2.1.2
-      - made DTH elements public
+			2.1.2
+			- made DTH elements public
 
-      2.1.3
-      - added GetFormattedTime to DTH
+			2.1.3
+			- added GetFormattedTime to DTH
 
-      2.1.3+
-      - Added NetworkProxy elements (ProxyConfig &amp; ProxyHandler)
-      - Made translation Proxy-compatible.
+			2.1.3+
+			- Added NetworkProxy elements (ProxyConfig &amp; ProxyHandler)
+			- Made translation Proxy-compatible.
 
-      2.2
-      - Changed Logger output layout.
+			2.2
+			- Changed Logger output layout.
 
-      2.3
-      - Added RSA crypto
+			2.3
+			- Added RSA crypto
 
-      2.3.0.1
-      - Added .NET 5.0 support
-      - Moved from Newtonsoft.Json to System.Text.Json
-      - Started disabling functions on older frameworks (like translation)
-      - In the next bigger release, we'll probably remove the entire support for .NET Framework 4.5
+			2.3.0.1
+			- Added .NET 5.0 support
+			- Moved from Newtonsoft.Json to System.Text.Json
+			- Started disabling functions on older frameworks (like translation)
+			- In the next bigger release, we'll probably remove the entire support for .NET Framework 4.5
 
-      2.3.0.4
-      - Fixed Logger
+			2.3.0.4
+			- Fixed Logger
 
-      2.3.0.5
-      - Fixed LicenseManager // move back to previous licensing system
+			2.3.0.5
+			- Fixed LicenseManager // move back to previous licensing system
 
-      2.3.0.6
-      - Fiddling with logger
+			2.3.0.6
+			- Fiddling with logger
 
-      2.3.1
-      - Language from embeded resource
+			2.3.1
+			- Language from embeded resource
 
-      2.3.1.1
-      - Added Assembly.GetBuildConfiguration()
+			2.3.1.1
+			- Added Assembly.GetBuildConfiguration()
 
-      2.3.1.2
-      - Fixes
-      - Added ParseExtensions
+			2.3.1.2
+			- Fixes
+			- Added ParseExtensions
 
-      2.3.1.3
-      - Added ContainsBunch extension to string
+			2.3.1.3
+			- Added ContainsBunch extension to string
 
-      2.3.1.4-5
-      - Added more args to ContainsBunch
-      2.3.1.6
-      - Added console.WriteColored(Line|)\\(\\).
-      2.3.1.7
-      - Added SHA1.Compute method
-      2.3.1.8
-      - Playing with typography =&gt; string.To(Camel|Pascal|Snake|Kebab)Case\\(\\).
-      2.3.1.9
-      - Jsons now ignore trailing commas
-      2.3.2.0
-      - Modified TranslationManager (added some arguments when you declare it and added a parameter as well)
-      2.3.2.1
-      - Fixed? TranslationManager (introduced *some* bugs here and there)
-      2.3.2.2
-      - Added .ToXMLString() extension.
-      2.3.2.3
-      - ToXMLString() encoding set to utf8.
-      2.3.2.4
-      - Added TrimWhiteSpaceFromValues() extension to XDocument.
-      2.3.2.5
-      - Removed unnecessary whitespaces.
-    </PackageReleaseNotes>
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
+			2.3.1.4-5
+			- Added more args to ContainsBunch
+			2.3.1.6
+			- Added console.WriteColored(Line|)\\(\\).
+			2.3.1.7
+			- Added SHA1.Compute method
+			2.3.1.8
+			- Playing with typography =&gt; string.To(Camel|Pascal|Snake|Kebab)Case\\(\\).
+			2.3.1.9
+			- Jsons now ignore trailing commas
+			2.3.2.0
+			- Modified TranslationManager (added some arguments when you declare it and added a parameter as well)
+			2.3.2.1
+			- Fixed? TranslationManager (introduced *some* bugs here and there)
+			2.3.2.2
+			- Added .ToXMLString() extension.
+			2.3.2.3
+			- ToXMLString() encoding set to utf8.
+			2.3.2.4
+			- Added TrimWhiteSpaceFromValues() extension to XDocument.
+			2.3.2.5
+			- Removed unnecessary whitespaces.
+		</PackageReleaseNotes>
+		<LangVersion>9.0</LangVersion>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NuGetPublishType>remote</NuGetPublishType>
-    <NuGetPublishLocation>https://nuget.czompisoftware.hu/v3/index.json</NuGetPublishLocation>
-  </PropertyGroup>
+	<ItemGroup>
+		<None Include="ReadMe.txt" pack="true" PackagePath="." />
+	</ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<NuGetPublishType>remote</NuGetPublishType>
+		<NuGetPublishLocation>https://nuget.czompisoftware.hu/v3/index.json</NuGetPublishLocation>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="SS.NuGet.Publish" Version="1.0.1912.22">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-	  <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.7.0">
-		  <Private>false</Private>
-	  </PackageReference>
-	  <PackageReference Condition="'$(TargetFramework)' != 'netcoreapp3.1' AND '$(TargetFramework)' != 'net5.0'" Include="Newtonsoft.Json" Version="12.0.3">
-		  <Private>false</Private>
-	  </PackageReference>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="SS.NuGet.Publish" Version="1.0.1912.22">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.7.0">
+			<Private>false</Private>
+		</PackageReference>
+		<PackageReference Condition="'$(TargetFramework)' != 'netcoreapp3.1' AND '$(TargetFramework)' != 'net5.0'" Include="Newtonsoft.Json" Version="12.0.3">
+			<Private>false</Private>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Coloring\" />
+	</ItemGroup>
 
 </Project>

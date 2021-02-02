@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 
-namespace hu.czompisoftware.libraries.net
+namespace CzomPack.Network
 {
     public class NetHandler
     {

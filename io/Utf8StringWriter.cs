@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hu.czompisoftware.libraries.io
+namespace CzomPack.IO
 {
     public sealed class Utf8StringWriter : StringWriter
     {

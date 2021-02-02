@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 #endif
 
-namespace hu.czompisoftware.libraries.translation
+namespace CzomPack.Translation
 {
     public class Translation
     {
@@ -34,14 +34,8 @@ namespace hu.czompisoftware.libraries.translation
 
     public class TranslationStruct
     {
-#if NET5_0 || NETCOREAPP3_1
-        [JsonPropertyName("Comment")]
-#endif
         public string Original { get; set; }
 
-#if NET5_0 || NETCOREAPP3_1
-        [JsonPropertyName("Value")]
-#endif
 #if NET5_0
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 #endif

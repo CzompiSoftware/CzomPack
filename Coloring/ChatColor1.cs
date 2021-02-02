@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 
-namespace hu.czompisoftware.libraries.coloring
+namespace CzomPack.Coloring
 {
     public struct ChatColor
     {

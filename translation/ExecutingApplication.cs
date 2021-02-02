@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace hu.czompisoftware.libraries.translation
+namespace CzomPack.Translation
 {
     internal class ExecutingApplication
     {

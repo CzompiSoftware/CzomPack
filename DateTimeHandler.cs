@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace hu.czompisoftware.libraries.general
+namespace CzomPack
 {
     public class DateTimeHandler
     {

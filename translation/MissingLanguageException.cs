@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace hu.czompisoftware.libraries.translation
+namespace CzomPack.Translation
 {
     [Serializable]
     internal class MissingLanguageException : Exception

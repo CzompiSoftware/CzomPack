@@ -1,13 +1,10 @@
-﻿using hu.czompisoftware.libraries.coloring;
-using hu.czompisoftware.libraries.extensions.model;
+﻿using CzomPack.Coloring;
+using CzomPack.Extensions.Model;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace hu.czompisoftware.libraries.extensions
+namespace CzomPack.Extensions
 {
     public static class StringExtension
     {
