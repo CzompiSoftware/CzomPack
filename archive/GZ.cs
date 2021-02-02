@@ -27,7 +27,7 @@ namespace CzomPack.Archive
         {
             var originalFileStream = fileToDecompress.OpenRead();
             var currentFileName = fileToDecompress.FullName;
-            var newFileName = currentFileName.Remove(currentFileName.Length - fileToDecompress.Extension.Length);
+            var newFileName = currentFileName[..-fileToDecompress.Extension.Length];
 
             var decompressedFileStream = File.Create(newFileName);
             new GZipStream(originalFileStream, CompressionMode.Decompress).CopyTo(decompressedFileStream);

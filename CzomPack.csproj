@@ -10,7 +10,7 @@
 		<PackageId>CzomPack</PackageId>
 		<RootNamespace>CzomPack</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>2.3.2.5</Version>
+		<Version>3.0.0.0</Version>
 		<PackageReleaseNotes>
 			1.1
 			- Migrated to new build model.
@@ -135,6 +135,8 @@
 			- Added TrimWhiteSpaceFromValues() extension to XDocument.
 			2.3.2.5
 			- Removed unnecessary whitespaces.
+			3.0.0.0
+			- Breaking changes, so we bumped the major version number.
 		</PackageReleaseNotes>
 		<LangVersion>9.0</LangVersion>
 	</PropertyGroup>
@@ -152,16 +154,9 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.7.0">
-			<Private>false</Private>
-		</PackageReference>
 		<PackageReference Condition="'$(TargetFramework)' != 'netcoreapp3.1' AND '$(TargetFramework)' != 'net5.0'" Include="Newtonsoft.Json" Version="12.0.3">
 			<Private>false</Private>
 		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Coloring\" />
 	</ItemGroup>
 
 </Project>
