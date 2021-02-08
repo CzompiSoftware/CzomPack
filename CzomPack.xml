@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CzomPack</name>
+    </assembly>
+    <members>
+        <member name="M:CzomPack.DateTimeHandler.GetDayNumber(System.DateTime)">
+            <summary>Nap számának lekérdezése.</summary>
+            <example>16</example>
+            <param name="dateTime">Dátum</param>
+        </member>
+        <member name="M:CzomPack.DateTimeHandler.GetDayId(System.DateTime)">
+            <summary>Nap számának lekérdezése.</summary>
+            <example>1</example>
+            <param name="dateTime">Dátum</param>
+        </member>
+        <member name="M:CzomPack.DateTimeHandler.GetDayName(System.DateTime,System.String)">
+            <summary>Nap nevének lekérdezése.</summary>
+            <example>Szombat</example>
+            <param name="dateTime">Dátum</param>
+            <param name="culture">Országkód, alapértelmezett: <b>hu-HU</b></param>
+        </member>
+        <member name="M:CzomPack.DateTimeHandler.WeekToDate(System.Int32)">
+            <summary>Hét számából  a hét első napjának (hétfő) lekérdezése.</summary>
+            <example>2019-08-12</example>
+            <param name="int">Hét száma</param>
+        </member>
+        <member name="M:CzomPack.DateTimeHandler.GetFormattedDate(System.DateTime)">
+            <summary>Formázott dátum lekérdezése.</summary>
+            <example>2019-03-16</example>
+            <param name="dateTime">Dátum</param>
+        </member>
+        <member name="M:CzomPack.DateTimeHandler.GetFormattedDateTime(System.DateTime)">
+            <summary>Formázott dátum és idő lekérdezése.</summary>
+            <example>2019. 03. 16. 11:51</example>
+            <param name="dateTime">Dátum</param>
+        </member>
+        <member name="M:CzomPack.DateTimeHandler.GetFormattedTime(System.DateTime)">
+            <summary>Formázott idő lekérdezése.</summary>
+            <example>11:51:28</example>
+            <param name="dateTime">Dátum</param>
+        </member>
+        <member name="M:CzomPack.DateTimeHandler.GetWeekNumber(System.DateTime)">
+            <summary>Hét számának lekérése.</summary>
+            <example>11</example>
+            <param name="dateTime">Dátum</param>
+        </member>
+        <member name="M:CzomPack.Extensions.XmlExtensions.TrimWhiteSpaceFromValues(System.Xml.Linq.XElement)">
+            <summary>
+            Trims whitespace from the xml node values.  
+            DOES NOT trim whitespace outside of values, can use PreserveWhitespace LoadOption when parsing for that.
+            </summary>
+            <param name="element"></param>
+        </member>
+    </members>
+</doc>

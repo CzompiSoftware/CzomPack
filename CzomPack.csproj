@@ -148,6 +148,9 @@
 		<NuGetPublishType>remote</NuGetPublishType>
 		<NuGetPublishLocation>https://nuget.czompisoftware.hu/v3/index.json</NuGetPublishLocation>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+	  <DocumentationFile>D:\GitHub.CzompiSoftware\CzomPack\CzomPack.xml</DocumentationFile>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="SS.NuGet.Publish" Version="1.0.1912.22">
