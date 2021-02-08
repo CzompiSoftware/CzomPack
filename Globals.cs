@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 #if NETCOREAPP3_1 || NET5_0
 using System.Text.Json;
 #endif
-using System.Threading.Tasks;
 
 namespace CzomPack
 {

@@ -55,7 +55,7 @@ namespace CzomPack.Extensions
         public static bool ContainsBunch(this string @this, params string[] values) => @this.ContainsBunch(ContainsType.AllOfThem, StringComparison.OrdinalIgnoreCase, values);
 
         public static bool ContainsBunch(this string @this, StringComparison comparison, params string[] values) => @this.ContainsBunch(ContainsType.AllOfThem, comparison, values);
-        
+
         public static bool ContainsBunch(this string @this, ContainsType ct, params string[] values) => @this.ContainsBunch(ct, StringComparison.OrdinalIgnoreCase, values);
 
         public static bool ContainsBunch(this string @this, ContainsType ct, StringComparison comparison, params string[] values) => ct switch

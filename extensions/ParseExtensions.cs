@@ -28,12 +28,12 @@ namespace CzomPack.Extensions
             var reader = XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document, IgnoreWhitespace = true });
             return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
         }
-        
+
 
         public static string ToXMLString<T>(this T @this) where T : class
         {
             XmlSerializer xmlSerializer = new XmlSerializer(@this.GetType());
-            
+
             using (Utf8StringWriter textWriter = new Utf8StringWriter())
             {
                 xmlSerializer.Serialize(textWriter, @this);
