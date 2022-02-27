@@ -1,5 +1,7 @@
 ﻿using CzomPack.Coloring;
 using CzomPack.Extensions.Model;
+using CzomPack.Logging;
+using Serilog.Events;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,7 +15,7 @@ namespace CzomPack.Extensions
         {
             message = message.Replace("&", "§");
             string[] msgLst;
-#if NET45
+#if NETFRAMEWORK || NETSTANDARD
             msgLst = message.Contains("§") ? message.Split('§') : new string[] { $"r{message}" };
 #else
             msgLst = message.Contains("§") ? message.Split("§") : new string[] { $"r{message}" };
@@ -30,7 +32,7 @@ namespace CzomPack.Extensions
                         if (colorStr == 'r') Console.ResetColor();
                         else if (consoleColor.HasValue) Console.ForegroundColor = consoleColor.Value;
                     }
-#if NET5_0 || NETCOREAPP3_1
+#if NETCOREAPP3_1_OR_GREATER
                     Console.Write(colorStr.IsRealChatColor() ? msg[1..] : msg);
 #else
                     Console.Write(colorStr.IsRealChatColor() ? msg.Substring(1) : msg);
@@ -60,12 +62,12 @@ namespace CzomPack.Extensions
 
         public static bool ContainsBunch(this string @this, ContainsType ct, StringComparison comparison, params string[] values) => ct switch
         {
-#if NET45
+#if NETFRAMEWORK || NETSTANDARD
             ContainsType.AllOfThem => !values.ToList().Select(x => comparison == StringComparison.OrdinalIgnoreCase || comparison == StringComparison.CurrentCultureIgnoreCase || comparison == StringComparison.InvariantCultureIgnoreCase ? @this.ToLower().Contains(x.ToLower()) : @this.Contains(x)).Contains(false),
 #else
             ContainsType.AllOfThem => values.ToList().Select(x => @this.Contains(x, comparison)).Contains(true),
 #endif
-#if NET45
+#if NETFRAMEWORK || NETSTANDARD
             ContainsType.OneOfThem => values.ToList().Select(x => comparison == StringComparison.OrdinalIgnoreCase || comparison == StringComparison.CurrentCultureIgnoreCase || comparison == StringComparison.InvariantCultureIgnoreCase ? @this.ToLower().Contains(x.ToLower()): @this.Contains(x)).Contains(true),
 #else
             ContainsType.OneOfThem => values.ToList().Select(x => @this.Contains(x, comparison)).Contains(true),
@@ -73,5 +75,8 @@ namespace CzomPack.Extensions
             _ => throw new System.ArgumentException("Unsupported `ContainsType` selected! How could this possibly happen?!")
         };
         #endregion
+
+        public static bool EqualsIgnoreCase(this string data, string other) => data.Equals(other, StringComparison.InvariantCultureIgnoreCase);
+
     }
 }

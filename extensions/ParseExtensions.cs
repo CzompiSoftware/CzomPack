@@ -1,6 +1,9 @@
 ﻿using CzomPack.IO;
+using CzomPack.Logging;
+using Serilog.Events;
+using System;
 using System.IO;
-#if NET5_0 || NETCOREAPP3_1
+#if NETCOREAPP3_1_OR_GREATER
 using System.Text.Json;
 #else 
 using Newtonsoft.Json;
@@ -12,6 +15,26 @@ namespace CzomPack.Extensions
 {
     public static class ParseExtensions
     {
+        public static LogEventLevel ToLogEventLevel(this LogType @this) => @this switch
+        {
+            LogType.Error => LogEventLevel.Error,
+            LogType.FatalError => LogEventLevel.Fatal,
+            LogType.Warning => LogEventLevel.Warning,
+            LogType.Debug => LogEventLevel.Debug,
+            LogType.Verbose => LogEventLevel.Verbose,
+            LogType.Info => LogEventLevel.Information,
+            _ => throw new NotSupportedException("Unsupported Log type detected")
+        };
+        public static LogType ToLogType(this LogEventLevel @this) => @this switch
+        {
+            LogEventLevel.Error => LogType.Error, 
+            LogEventLevel.Fatal => LogType.FatalError,
+            LogEventLevel.Warning => LogType.Warning,
+            LogEventLevel.Debug => LogType.Debug,
+            LogEventLevel.Verbose => LogType.Verbose,
+            LogEventLevel.Information => LogType.Info,
+            _ => throw new NotSupportedException("Unsupported Log level detected")
+        };
         public static Stream ToStream(this string @this)
         {
             var stream = new MemoryStream();
@@ -22,32 +45,66 @@ namespace CzomPack.Extensions
             return stream;
         }
 
-
-        public static T ParseXML<T>(this string @this) where T : class
+        public static string FromStream(this Stream @this)
         {
-            var reader = XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document, IgnoreWhitespace = true });
+            string content = null;
+            var stream = new StreamReader(@this);
+            if (stream.Read() != -1)
+                content = stream.ReadToEnd();
+            return content;
+        }
+
+        #region Xml
+        public static T ToXml<T>(this string @this) where T : class
+        {
+            var reader = XmlReader.Create(@this.Trim().ToStream(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
             return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
         }
 
-
-        public static string ToXMLString<T>(this T @this) where T : class
+        public static string FromXml<T>(this T @this) where T : class
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(@this.GetType());
-
-            using (Utf8StringWriter textWriter = new Utf8StringWriter())
-            {
-                xmlSerializer.Serialize(textWriter, @this);
-                return textWriter.ToString();
-            }
+            using StringWriter stringwriter = new();
+            XmlSerializer serializer = new(@this.GetType());
+            serializer.Serialize(stringwriter, @this);
+            return stringwriter.ToString();
         }
 
-        public static T ParseJSON<T>(this string @this)
+        public static void ToXmlFile<T>(this T @this, string fileName) where T : class
         {
-#if NET5_0 || NETCOREAPP3_1
-            return JsonSerializer.Deserialize<T>(@this.Trim());
+            XmlSerializer writer = new(typeof(T));
+
+            FileStream file = File.Create(fileName);
+
+            writer.Serialize(file, @this);
+            file.Close();
+        }
+        #endregion
+
+        #region Json
+        public static T ToJson<T>(this string @this) where T : class
+        {
+#if NETCOREAPP3_0_OR_GREATER
+            return JsonSerializer.Deserialize<T>(@this.Trim(), Globals.JsonSerializerOptions);
 #else
-            return JsonConvert.DeserializeObject<T>(@this.Trim());
+		return JsonConvert.DeserializeObject<T>(@this.Trim());
 #endif
         }
+        public static string FromJson<T>(this T @this) where T : class
+        {
+#if NETCOREAPP3_0_OR_GREATER
+            return JsonSerializer.Serialize(@this, Globals.JsonSerializerOptions);
+#else
+		return JsonConvert.SerializeObject(@this, Newtonsoft.Json.Formatting.Indented);
+#endif
+        }
+        public static void ToJsonFile<T>(this T @this, string fileName) where T : class
+        {
+#if NETCOREAPP3_0_OR_GREATER
+            File.WriteAllText(fileName, JsonSerializer.Serialize(@this, Globals.JsonSerializerOptions));
+#else
+		File.WriteAllText(fileName, JsonConvert.SerializeObject(@this, Newtonsoft.Json.Formatting.Indented));
+#endif
+        }
+        #endregion
     }
 }

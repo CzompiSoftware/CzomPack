@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net5.0;net45;netcoreapp3.1;netcoreapp2.2;netcoreapp2.1</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;net6.0;net5.0;netcoreapp3.1;netcoreapp2.2;netcoreapp2.1</TargetFrameworks>
 		<Authors>Czompi</Authors>
 		<Company>Czompi Software</Company>
-		<Product>CzompiPack</Product>
-		<Copyright>Czompi Software 2020</Copyright>
+		<Product>CzomPack</Product>
+		<Copyright>Czompi Software 2021</Copyright>
 		<Description>Core libraries for Czompi's programming needs.</Description>
 		<PackageId>CzomPack</PackageId>
 		<RootNamespace>CzomPack</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>3.0.0</Version>
+		<Version>3.0.7.2</Version>
 		<PackageReleaseNotes>
 			1.1
 			- Migrated to new build model.
@@ -115,35 +115,108 @@
 
 			2.3.1.4-5
 			- Added more args to ContainsBunch
+			
 			2.3.1.6
 			- Added console.WriteColored(Line|)\\(\\).
+			
 			2.3.1.7
 			- Added SHA1.Compute method
+			
 			2.3.1.8
 			- Playing with typography =&gt; string.To(Camel|Pascal|Snake|Kebab)Case\\(\\).
+
 			2.3.1.9
 			- Jsons now ignore trailing commas
+
 			2.3.2.0
 			- Modified TranslationManager (added some arguments when you declare it and added a parameter as well)
+
 			2.3.2.1
 			- Fixed? TranslationManager (introduced *some* bugs here and there)
+
 			2.3.2.2
 			- Added .ToXMLString() extension.
+
 			2.3.2.3
 			- ToXMLString() encoding set to utf8.
+
 			2.3.2.4
 			- Added TrimWhiteSpaceFromValues() extension to XDocument.
+
 			2.3.2.5
 			- Removed unnecessary whitespaces.
+
 			3.0.0.0
 			- Breaking changes, so we bumped the major version number.
+
+			3.0.1.0
+			- Changed Logger to use Serilog (fixes simultanious writes to file causing exception).
+
+			3.0.1.1
+			- Added a bit more debug info
+
+			3.0.1.2
+			- Added a bit more debug info
+
+			3.0.1.3
+			- Added namespace to assembly
+
+			3.0.2
+			- Fixed logger parameters
+
+			3.0.2.1
+			- Removed obsolete logger methods
+
+			3.0.2.2
+			- Fixed logger parameters #2
+
+			3.0.2.3
+			- Fixed StackOverflowException
+
+			3.0.2.4
+			- Fixed namespace is null
+
+			3.0.2.5
+			- Fiddling with namespace
+
+			3.0.2.7
+			- Made workingdirectory public
+
+			3.0.3
+			- Added ConsoleColors
+
+			3.0.4
+			- Added Application class
+			- Added string.EqualsIgnoreCase method
+			- Fixed logger location
+			- Removed .NET Framework 4.5 support
+
+			3.0.5
+			- Added some extensions to ParseExtensions
+
+			3.0.6
+			- Fixing Application class related errors.
+			- Removed some unnecessary code.
+
+			3.0.6.1
+			- Fixing Application class related errors.
+
+			3.0.6.2
+			- Fiddling with Application class.
+			
+			3.0.7
+			- Added LoggerSettings class.
+			
+			3.0.7.1
+			- Added .NET Standard 2.0 support.
+			- Fixed EqualsIgnoreCase for Alpine-based docker images.
 		</PackageReleaseNotes>
-		<LangVersion>9.0</LangVersion>
+		<LangVersion>10.0</LangVersion>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<!--<ItemGroup>
 		<None Include="ReadMe.txt" pack="true" PackagePath="." />
-	</ItemGroup>
+	</ItemGroup>-->
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<NuGetPublishType>remote</NuGetPublishType>
 		<NuGetPublishLocation>https://nuget.czompisoftware.hu/v3/index.json</NuGetPublishLocation>
@@ -153,11 +226,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Serilog" Version="2.11.0-dev-01377" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.2-dev-00890" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
 		<PackageReference Include="SS.NuGet.Publish" Version="1.0.1912.22">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Condition="'$(TargetFramework)' != 'netcoreapp3.1' AND '$(TargetFramework)' != 'net5.0'" Include="Newtonsoft.Json" Version="12.0.3">
+		<PackageReference Condition="'$(TargetFramework)' != 'netcoreapp3.1' AND '$(TargetFramework)' != 'net5.0' AND '$(TargetFramework)' != 'net6.0'" Include="Newtonsoft.Json" Version="13.0.1">
 			<Private>false</Private>
 		</PackageReference>
 	</ItemGroup>
