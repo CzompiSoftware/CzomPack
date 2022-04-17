@@ -7,9 +7,11 @@ using System.IO;
 using System.Text.Json;
 #else 
 using Newtonsoft.Json;
+using Formatting = System.Xml.Formatting;
 #endif
 using System.Xml;
 using System.Xml.Serialization;
+using System.Text;
 
 namespace CzomPack.Extensions
 {
@@ -61,22 +63,34 @@ namespace CzomPack.Extensions
             return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
         }
 
-        public static string FromXml<T>(this T @this) where T : class
+        public static string FromXml<T>(this T @this, bool writeIndented = true) where T : class
         {
-            using StringWriter stringwriter = new();
+            StringWriterUtf8 stringWriter = new();
             XmlSerializer serializer = new(@this.GetType());
-            serializer.Serialize(stringwriter, @this);
-            return stringwriter.ToString();
+            serializer.Serialize(stringWriter, @this);
+            string output = stringWriter.ToString();
+            stringWriter.Dispose();
+
+            if (writeIndented)
+            {
+                stringWriter = new();
+                XmlDocument document = new();
+                document.LoadXml(output);
+                XmlTextWriter writer = new(stringWriter);
+                writer.Formatting = Formatting.Indented;
+                document.Save(writer);
+                output = stringWriter.ToString();
+                writer.Close();
+                writer.Dispose();
+                stringWriter.Close();
+                stringWriter.Dispose();
+            }
+            return output;
         }
 
         public static void ToXmlFile<T>(this T @this, string fileName) where T : class
         {
-            XmlSerializer writer = new(typeof(T));
-
-            FileStream file = File.Create(fileName);
-
-            writer.Serialize(file, @this);
-            file.Close();
+            File.WriteAllText(fileName, @this.FromXml());
         }
         #endregion
 

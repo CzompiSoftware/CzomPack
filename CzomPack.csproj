@@ -10,7 +10,7 @@
 		<PackageId>CzomPack</PackageId>
 		<RootNamespace>CzomPack</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>3.0.7.2</Version>
+		<Version>3.0.7.8</Version>
 		<PackageReleaseNotes>
 			1.1
 			- Migrated to new build model.
